@@ -5,7 +5,7 @@ const Queue = function() {
 }
 
 Queue.prototype.enqueue = function(value) {
-  this.storage[this.end] = value;
+    this.storage[this.end] = value;
   this.end++;
 }
 
