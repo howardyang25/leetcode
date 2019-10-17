@@ -39,7 +39,7 @@ const shipWithinDaysOptimized = (weights, D) => {
         cur = 0;
       }
 
-      cur += weights[i];
+      cur += weights[i];cdo
     }
 
     if (need > D) {
