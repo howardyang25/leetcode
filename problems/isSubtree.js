@@ -25,9 +25,35 @@ const isSubtree = (s, t) => {
   traverse(s, arr1);
   traverse(t, arr2);
   
-  console.log(arr1);
-  console.log(arr2);
   return arr1.join('').indexOf(arr2.join('')) !== -1;
+};
+
+const areIdentical = (node1, node2) => {
+  if (node1 === null && node2 === null) {
+    return true;
+  }
+
+  if (node1 === null || node2 === null) {
+    return false;
+  }
+
+  return (node1.val === node2.val) && areIdentical(node1.left, node2.left) && areIdentical(node1.right, node2.right);
+}
+
+const isSubtreeCompareNodes = (s, t) => {
+  if (s === null) {
+    return true;
+  }
+
+  if (t === null) {
+    return false;
+  }
+
+  if (areIdentical(s, t)) {
+    return true;
+  }
+
+  return isSubtreeCompareNodes(s.left, t) || isSubtreeCompareNodes(s.right, t);
 };
 
 const a = new TreeNode(3);
@@ -47,4 +73,4 @@ const h = new TreeNode(2);
 f.left = g;
 f.right = h;
 
-console.log(isSubtree(a, f));
+console.log(isSubtreeCompareNodes(a, f));
