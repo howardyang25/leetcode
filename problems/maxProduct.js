@@ -96,5 +96,25 @@ const maxProductOptimized = (nums) => {
   return max;
 };
 
-const nums = [-3, 2, 3, 0, -1];
-console.log(maxProductOptimized(nums));
+const topAnswer = (nums) => {
+  debugger;
+  let max = nums[0];
+  let imax = max;
+  let imin = max;
+
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] < 0) {
+      [imax, imin] = [imin, imax];
+    }
+
+    imax = Math.max(nums[i], imax * nums[i]);
+    imin = Math.min(nums[i], imin * nums[i]);
+
+    max = Math.max(max, imax);
+  }
+
+  return max;
+};
+
+const nums = [-3, 2, -3, 0, 7];
+console.log(topAnswer(nums));
