@@ -1,32 +1,54 @@
 const maxProduct = (nums) => {
-  if (nums.length === 0) {
-    return [];
+  if (nums.length === 1) {
+    return nums[0];
   }
-  
+
   let max = nums[0];
-  let maxStart = 0;
-  let maxEnd = 0;
-  
-  for (let i = 0; i < nums.length; i++) {
-    let curProduct = nums[i];
-    if (curProduct > max) {
-      max = curProduct;
-      maxStart = i;
-      maxEnd = i;
+  let imax = max;
+  let imin = max;
+
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] < 0) {
+      [imax, imin] = [imin, imax];
     }
 
-    for (let j = i + 1; j < nums.length; j++) {
-      curProduct *= nums[j];
-      if (curProduct > max) {
-        max = curProduct;
-        maxStart = i;
-        maxEnd = j;
-      }
-    }
+    imax = Math.max(nums[i], imax * nums[i]);
+    imin = Math.min(nums[i], imin * nums[i]);
+    max = Math.max(imax, max);
   }
 
-  return nums.slice(maxStart, maxEnd + 1).reduce((acc, cur) => acc * cur);
+  return max;
 };
+
+// const maxProduct = (nums) => {
+//   if (nums.length === 0) {
+//     return [];
+//   }
+  
+//   let max = nums[0];
+//   let maxStart = 0;
+//   let maxEnd = 0;
+  
+//   for (let i = 0; i < nums.length; i++) {
+//     let curProduct = nums[i];
+//     if (curProduct > max) {
+//       max = curProduct;
+//       maxStart = i;
+//       maxEnd = i;
+//     }
+
+//     for (let j = i + 1; j < nums.length; j++) {
+//       curProduct *= nums[j];
+//       if (curProduct > max) {
+//         max = curProduct;
+//         maxStart = i;
+//         maxEnd = j;
+//       }
+//     }
+//   }
+
+//   return nums.slice(maxStart, maxEnd + 1).reduce((acc, cur) => acc * cur);
+// };
 
 const maxProductOptimized = (nums) => {
   if (nums.length === 0) {
@@ -117,4 +139,4 @@ const topAnswer = (nums) => {
 };
 
 const nums = [-3, 2, -3, 0, 7];
-console.log(topAnswer(nums));
+// console.log(maxProduct(nums));
