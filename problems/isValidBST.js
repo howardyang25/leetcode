@@ -3,34 +3,63 @@ function TreeNode(val) {
   this.left = this.right = null;
 }
 
-const isValidBST = (root) => {
-  if (root === null) {
-    return true;
-  }
+// const isValidBST = (root) => {
+//   if (root === null) {
+//     return true;
+//   }
+
+//   const inOrder = [];
+//   const traverse = (node) => {
+//     if (node.left) {
+//       traverse(node.left);
+//     }
+    
+//     inOrder.push(node.val);
+    
+//     if (node.right) {
+//       traverse(node.right);
+//     }
+
+//   };
   
-  const inOrder = [];
-  const traverse = (node) => {
-    if (node.left) {
-      traverse(node.left);
+//   traverse(root);
+//   console.log(inOrder);
+//   for (let i = 0; i < inOrder.length - 1; i++) {
+//     if (inOrder[i] >= inOrder[i + 1]) {
+//       return false;
+//     }
+//   }
+
+//   return true;
+// };
+
+const isValidBST = (root) => {
+  const check = (node, lowerBound, upperBound) => {    
+    if (node === null) {
+      return true;
+    }
+
+    if (node.val <= lowerBound || root.left.val >= upperBound)) {
+      return false;
     }
     
-    inOrder.push(node.val);
-
-    if (node.right) {
-      traverse(node.right);
+    if (root.right && (root.right.val <= root.val || root.right.val <= lowerBound || root.right.val >= upperBound)) {
+      return false;
+    }
+    
+    if (root.left) {
+      return isValidBST(root.left, -Infinity, root.val);
+    }
+    
+    if (root.right) {
+      return isValidBST(root.right, root.val, +Infinity);
     }
   };
   
-  traverse(root);
-  for (let i = 0; i < inOrder.length - 1; i++) {
-    if (inOrder[i] >= inOrder[i + 1]) {
-      return false;
-    }
+  if (check(root, -Infinity, +Infinity) === undefined) {
+    return true;
   }
-
-  return true;
 };
-
 // const a = new TreeNode(2);
 // const b = new TreeNode(1);
 // const c = new TreeNode(3);
