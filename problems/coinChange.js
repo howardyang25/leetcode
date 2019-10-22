@@ -1,26 +1,41 @@
 const coinChange = (coins, amount) => {
-  const options = [];
-  const recurse = (amountLeft, coinCount) => {
-    if (amountLeft === 0) {
-      options.push(coinCount);
-      return;
+  const dp = {
+    0: 0,
+  };
+
+  const recurse = (amountLeft) => {
+    if (dp[amountLeft] !== undefined) {
+      return dp[amountLeft];
     }
 
     if (amountLeft < 0) {
-      return;
+      return NaN;
     }
-
+    
+    const options = [];
     for (let i = 0; i < coins.length; i++) {
-      recurse(amountLeft - coins[i], coinCount + 1);
+      const coinCount = 1 + recurse(amountLeft - coins[i]);
+      if (!Number.isNaN(coinCount)) {
+        options.push(coinCount);
+      }
     }
-  };
+    
+    if (options.length === 0) {
+      dp[amountLeft] = NaN;
+      return NaN;
+    }
 
-  recurse(amount, 0);
-  if (options.length === 0) {
+    const minCoins = Math.min(...options);
+    dp[amountLeft] = minCoins;
+    return minCoins;
+  };
+  
+  const solution = recurse(amount);
+  if (Number.isNaN(solution)) {
     return -1;
   }
 
-  return Math.min(...options);
+  return recurse(amount);
 };
 
-console.log(coinChange([2], 3));
+console.log(coinChange([186,419,83,408], 6249));
